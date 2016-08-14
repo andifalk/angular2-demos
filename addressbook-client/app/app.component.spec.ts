@@ -8,6 +8,7 @@ import { TestComponentBuilder } from '@angular/core/testing';
 import { By }             from '@angular/platform-browser';
 import { provide }        from '@angular/core';
 import { ViewMetadata }   from '@angular/core';
+import {TestBed} from "@angular/core/testing/test_bed";
 
 ////////  SPECS  /////////////
 
@@ -23,7 +24,7 @@ describe('AppComponent with TCB', function () {
   it('should instantiate component',
     async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
 
-    tcb.createAsync(AppComponent).then(fixture => {
+      tcb.createAsync(AppComponent).then(fixture => {
       expect(fixture.componentInstance instanceof AppComponent).toBe(true, 'should create AppComponent');
     });
   })));
@@ -38,7 +39,7 @@ describe('AppComponent with TCB', function () {
 
           h1 = fixture.debugElement.query(By.css('h1')).nativeElement;            // preferred
 
-      expect(h1.innerText).toMatch(/angular 2 app/i, '<h1> should say something about "Angular 2 App"');
+      expect(h1.innerText).toMatch(/Addressbook App/i, '<h1> should say something about "Angular 2 App"');
     });
 
   })));
