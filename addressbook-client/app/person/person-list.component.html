@@ -1,0 +1,12 @@
+<h2>Person List</h2>
+
+  <p-dataTable [value]="persons">
+    <p-column field="firstName" header="First name"></p-column>
+    <p-column field="lastName" header="Last name"></p-column>
+    <p-column>
+      <template let-person="rowData">
+        <button type="button" pButton (click)="showPerson(person)"  label="Show"></button>
+        <button type="button" pButton (click)="editPerson(person)"  label="Edit"></button>
+      </template>
+    </p-column>
+  </p-dataTable>

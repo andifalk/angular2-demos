@@ -1,0 +1,19 @@
+<h2>Person Detail</h2>
+<div *ngIf="person">
+  <p>
+    <label for="personId">Id: </label>
+    <label id="personId">{{person.id}}</label>
+  </p>
+  <p>
+    <label for="gender">Gender: </label>
+    <label id="gender">{{person.gender}}</label>
+  </p>
+  <p>
+    <label for="firstname">First name: </label>
+    <label id="firstname">{{person.firstName}}</label>
+  </p>
+  <p>
+    <label for="lastname">Last name: </label>
+    <label id="lastname">{{person.lastName}}</label>
+  </p>
+</div>
