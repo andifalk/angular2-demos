@@ -1,5 +1,6 @@
 <h2>Person List</h2>
 
+<div *ngIf="!errorMessage">
   <p-dataTable [value]="persons">
     <p-column field="firstName" header="First name"></p-column>
     <p-column field="lastName" header="Last name"></p-column>
@@ -10,3 +11,9 @@
       </template>
     </p-column>
   </p-dataTable>
+  <br>
+  <p>
+    <button type="button" pButton (click)="createPerson()" label="Add"></button>
+  </p>
+</div>
+<span *ngIf="errorMessage">{{errorMessage}}</span>

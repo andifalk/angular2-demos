@@ -5,6 +5,7 @@ import {Column} from 'primeng/primeng';
 import {Button} from 'primeng/primeng';
 import {PersonService} from "./person-service";
 import {Router} from "@angular/router";
+//import './rxjs-operators';
 
 @Component({
     selector: 'person-list',
@@ -15,8 +16,13 @@ export class PersonListComponent {
 
   public persons:Array<Person>;
 
+  public errorMessage:string;
+
   constructor(private _personService:PersonService, private router:Router) {
-    this._personService.getPersons().then(persons => this.persons = persons);
+    this._personService.getPersons().subscribe(
+      persons => this.persons = persons.persons,
+      error =>  this.errorMessage = <any>error
+    );
   }
 
   showPerson(person:Person) {
@@ -27,5 +33,9 @@ export class PersonListComponent {
   editPerson(person:Person) {
     console.log(person);
     this.router.navigate(['/person', person.id]);
+  }
+
+  createPerson() {
+    this.router.navigate(['/person-create'])
   }
 }

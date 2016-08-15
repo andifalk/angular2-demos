@@ -21,7 +21,10 @@ export class PersonDetailComponent {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];
       this._personService.getPerson(id)
-        .then(pers => { console.log(pers); this.person = pers; console.log('this.person=%o', this.person)});
+        .subscribe(
+          pers => { console.log(pers); this.person = pers; console.log('this.person=%o', this.person)}
+        );
+        //.then(pers => { console.log(pers); this.person = pers; console.log('this.person=%o', this.person)});
     });
   }
 
