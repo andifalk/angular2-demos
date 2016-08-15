@@ -1,27 +1,26 @@
 package com.example.addressbook.person.api.resource;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resources;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import com.example.addressbook.person.api.PersonController;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Collection;
 
 /**
  * Created by afa on 15.08.16.
  */
-public class PersonListResource extends Resources<PersonResource> {
+public class PersonListResource extends ResourceSupport {
 
-    public PersonListResource(Iterable<PersonResource> content, Link... links) {
-        super(content, links);
-    }
+    private final Collection<PersonResource> persons;
 
-    @JsonIgnore
-    @Override
-    public Collection<PersonResource> getContent() {
-        return super.getContent();
+    public PersonListResource(Collection<PersonResource> persons) {
+        this.persons = persons;
+        add(linkTo(methodOn(PersonController.class).findAll()).withSelfRel());
     }
 
     public Collection<PersonResource> getPersons() {
-        return getContent();
+        return persons;
     }
 }
