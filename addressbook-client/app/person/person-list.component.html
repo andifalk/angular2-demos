@@ -16,4 +16,6 @@
     <button type="button" pButton (click)="createPerson()" label="Add"></button>
   </p>
 </div>
-<span *ngIf="errorMessage">{{errorMessage}}</span>
+<div *ngIf="msgs">
+  <p-messages [value]="msgs"></p-messages>
+</div>
