@@ -14,14 +14,17 @@ export class PersonService {
 
   private _persons: Array<Person>;
 
+  private _baseurl:string = 'http://localhost:8080';
+
   public getPersons():Observable<PersonList> {
 
     let headers = new Headers({ 'Accept': 'application/json' });
-    headers.append('Authorization', this._authService.getAuthorizationHeader());
-    let options = new RequestOptions({ headers: headers });
+    headers.append('X-Requested-With', 'XMLHttpRequest');
+    headers.append('Authorization', this._authService.getBearerAuthorizationHeader());
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
 
     return this._http
-      .get('http://localhost:8080/api/persons', options)
+      .get(this._baseurl + '/persons', options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -31,12 +34,12 @@ export class PersonService {
     let body = JSON.stringify({ firstName: person.firstName, lastName: person.lastName, gender: person.gender });
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    headers.append('Authorization', this._authService.getAuthorizationHeader());
-//    headers.append('X-XSRF-TOKEN', 'd4737ef3-48f0-450b-a34b-2c33d5e2b9aa');
+    headers.append('X-Requested-With', 'XMLHttpRequest');
+    headers.append('Authorization', this._authService.getBearerAuthorizationHeader());
 
     let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-    return this._http.post('http://localhost:8080/api/persons', body, options)
+    return this._http.post(this._baseurl + '/persons', body, options).retry(2)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -45,11 +48,12 @@ export class PersonService {
     console.log('getPerson() id=%o', id);
 
     let headers = new Headers({ 'Accept': 'application/json' });
-    headers.append('Authorization', this._authService.getAuthorizationHeader());
-    let options = new RequestOptions({ headers: headers });
+    headers.append('X-Requested-With', 'XMLHttpRequest');
+    headers.append('Authorization', this._authService.getBearerAuthorizationHeader());
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
 
     return this._http
-      .get('http://localhost:8080/api/persons/' + id, options)
+      .get(this._baseurl + '/persons/' + id, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
