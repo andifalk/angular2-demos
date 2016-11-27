@@ -9,7 +9,7 @@ import org.springframework.hateoas.ResourceSupport;
 import java.util.Collection;
 
 /**
- * Created by afa on 15.08.16.
+ * Resource for list of {@link PersonResource}.
  */
 public class PersonListResource extends ResourceSupport {
 
@@ -20,6 +20,7 @@ public class PersonListResource extends ResourceSupport {
         add(linkTo(methodOn(PersonController.class).findAll()).withSelfRel());
     }
 
+    @SuppressWarnings("unused")
     public Collection<PersonResource> getPersons() {
         return persons;
     }

@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {Person} from "./person";
-import {InputText, Dropdown, Button, SelectItem} from 'primeng/primeng';
 import {PersonService} from "./person-service";
 import {Router} from "@angular/router";
 
@@ -14,8 +13,7 @@ import {Router} from "@angular/router";
               .ng-invalid {
                 border-left: 5px solid #a94442; /* red */
               }`
-    ],
-    directives: [InputText, Dropdown, Button]
+    ]
   })
 export class PersonCreateComponent {
 

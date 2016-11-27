@@ -4,6 +4,7 @@
   <p-dataTable [value]="persons">
     <p-column field="firstName" header="First name"></p-column>
     <p-column field="lastName" header="Last name"></p-column>
+    <p-column field="gender" header="Gender"></p-column>
     <p-column>
       <template let-person="rowData">
         <button type="button" pButton (click)="showPerson(person)"  label="Show"></button>

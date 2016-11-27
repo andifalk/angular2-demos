@@ -5,7 +5,7 @@ import com.example.addressbook.person.model.Person;
 import java.util.List;
 
 /**
- * Created by afa on 15.08.16.
+ * Service for managing {@link Person persons}.
  */
 public interface PersonService {
 

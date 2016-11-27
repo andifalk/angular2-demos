@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 /**
- * Created by afa on 15.08.16.
+ * REST controller for person API.
  */
 @CrossOrigin
 @RestController

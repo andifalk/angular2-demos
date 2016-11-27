@@ -1,5 +1,32 @@
 package com.example.addressbook.person.api;
 
+import com.example.addressbook.person.api.resource.ModifyPersonResource;
+import com.example.addressbook.person.boundary.PersonService;
+import com.example.addressbook.person.model.GenderEnum;
+import com.example.addressbook.person.model.Person;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.test.OAuth2ContextConfiguration;
+import org.springframework.security.oauth2.client.test.OAuth2ContextSetup;
+import org.springframework.security.oauth2.client.test.RestTemplateHolder;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestOperations;
+
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Matchers.any;
@@ -9,38 +36,26 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.addressbook.person.api.resource.ModifyPersonResource;
-import com.example.addressbook.person.boundary.PersonService;
-import com.example.addressbook.person.model.GenderEnum;
-import com.example.addressbook.person.model.Person;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Arrays;
-
 /**
- * Unit test to verify {@link PersonController}.
+ * Integration test to verify {@link PersonController}.
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(PersonController.class)
+@ActiveProfiles("test")
+@WebMvcTest(controllers = PersonController.class)
 @WithMockUser
-public class PersonControllerTest {
+@OAuth2ContextConfiguration(ResourceOwnerPasswordResourceDetails.class)
+public class PersonControllerTest implements RestTemplateHolder {
 
+    @Rule
+    public OAuth2ContextSetup context = OAuth2ContextSetup.withEnvironment(this, MyClientDetailsResource.instance());
+
+    private RestOperations restTemplate;
+
+    @SuppressWarnings("SpringJavaAutowiredMembersInspection")
     @Autowired
     private MockMvc mockMvc;
 
+    @SuppressWarnings("unused")
     @MockBean
     private PersonService personService;
 
@@ -56,14 +71,11 @@ public class PersonControllerTest {
         when(personService.findAll()).thenReturn(Arrays.asList(person1, person2));
         when(personService.findOne(1L)).thenReturn(person1);
         when(personService.findOne(2L)).thenReturn(person2);
-        when(personService.save(any(Person.class))).thenAnswer(new Answer<Person>() {
-            @Override
-            public Person answer(InvocationOnMock invocation) throws Throwable {
-                assertThat(invocation.getArguments()).isNotNull().hasSize(1);
-                Person person = invocation.getArgumentAt(0, Person.class);
-                ReflectionTestUtils.setField(person, "id", 1L);
-                return person;
-            }
+        when(personService.save(any(Person.class))).thenAnswer(invocation -> {
+            assertThat(invocation.getArguments()).isNotNull().hasSize(1);
+            Person person = invocation.getArgumentAt(0, Person.class);
+            ReflectionTestUtils.setField(person, "id", 1L);
+            return person;
         });
     }
 
@@ -120,6 +132,23 @@ public class PersonControllerTest {
                         .content(new ObjectMapper().writeValueAsString(modifyPersonResource)))
                 .andExpect(status().isCreated());
     }
+
+    @Override
+    public void setRestTemplate(RestOperations restTemplate) {
+
+    }
+
+    @Override
+    public RestOperations getRestTemplate() {
+        return null;
+    }
+
+    static class MyClientDetailsResource extends
+            ResourceOwnerPasswordResourceDetails {
+  		public MyClientDetailsResource(Environment environment) {
+
+        }
+  	}
 
 
 }

@@ -1,16 +1,12 @@
 import {Component} from "@angular/core";
 import {Person} from "./person";
-import {DataTable} from 'primeng/primeng';
-import {Column} from 'primeng/primeng';
-import {Button, Messages} from 'primeng/primeng';
 import {PersonService} from "./person-service";
 import {Router} from "@angular/router";
-import {Message} from "primeng/components/common";
+import {Message} from "primeng/components/common/api";
 
 @Component({
     selector: 'person-list',
-    templateUrl: 'app/person/person-list.component.html',
-    directives: [DataTable, Column, Button, Messages]
+    templateUrl: 'app/person/person-list.component.html'
   })
 export class PersonListComponent {
 

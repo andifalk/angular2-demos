@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Created by afa on 18.08.16.
+ * Configuration for web security.
  */
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {

@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.4.0.RELEASE'
+		springBootVersion = '1.4.2.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -16,7 +16,7 @@ apply plugin: 'spring-boot'
 
 jar {
 	baseName = 'authorization-server'
-	version = '0.0.1-SNAPSHOT'
+	version = '1.0.0-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -31,7 +31,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.boot:spring-boot-starter-hateoas')
 	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.security.oauth:spring-security-oauth2:2.0.10.RELEASE')
+	compile('org.springframework.security.oauth:spring-security-oauth2:2.0.12.RELEASE')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

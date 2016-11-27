@@ -1,11 +1,5 @@
 package com.example.addressbook.person.boundary;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-
 import com.example.addressbook.person.model.GenderEnum;
 import com.example.addressbook.person.model.Person;
 import com.example.addressbook.person.repository.PersonRepository;
@@ -13,16 +7,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
+
 /**
- * Created by afa on 16.08.16.
+ * Unit test for {@link PersonService}.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PersonServiceTest {
@@ -57,15 +53,11 @@ public class PersonServiceTest {
 
         Person person = new Person("Herbert", "Maier", GenderEnum.MALE);
 
-        when(personRepository.save(eq(person))).thenAnswer(new Answer<Person>() {
-
-            @Override
-            public Person answer(InvocationOnMock invocation) throws Throwable {
-                assertThat(invocation.getArguments().length).isEqualTo(1);
-                Person person = invocation.getArgumentAt(0, Person.class);
-                ReflectionTestUtils.setField(person, "id", 1L);
-                return person;
-            }
+        when(personRepository.save(eq(person))).thenAnswer(invocation -> {
+            assertThat(invocation.getArguments().length).isEqualTo(1);
+            Person person3 = invocation.getArgumentAt(0, Person.class);
+            ReflectionTestUtils.setField(person3, "id", 1L);
+            return person3;
         });
 
         Person storedPerson = cut.save(person);

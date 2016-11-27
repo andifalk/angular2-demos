@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- * Created by afa on 15.08.16.
+ * Resource for {@link Person}.
  */
 @JsonPropertyOrder({"id", "gender", "firstName", "lastName"})
 public class PersonResource extends ResourceSupport {
@@ -24,18 +24,22 @@ public class PersonResource extends ResourceSupport {
         add(linkTo(methodOn(PersonController.class).findAll()).withRel("back"));
     }
 
+    @SuppressWarnings("unused")
     public String getFirstName() {
         return person.getFirstName();
     }
 
+    @SuppressWarnings("unused")
     public String getLastName() {
         return person.getLastName();
     }
 
+    @SuppressWarnings("unused")
     public GenderEnum getGender() {
         return person.getGender();
     }
 
+    @SuppressWarnings("unused")
     @JsonProperty("id")
     public Long getPersonId() {
         return person.getId();

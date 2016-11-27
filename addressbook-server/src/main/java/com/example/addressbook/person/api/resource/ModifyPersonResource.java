@@ -1,19 +1,24 @@
 package com.example.addressbook.person.api.resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
- * Created by afa on 15.08.16.
+ * Resource to create person.
  */
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ModifyPersonResource {
 
     private Long id;
 
     @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9- ]{1,30}$")
     private String firstName;
 
     @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9- ]{1,30}$")
     private String lastName;
 
     @NotNull

@@ -9,7 +9,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by afa on 15.08.16.
+ * Person entity.
  */
 @Entity
 public class Person extends AbstractPersistable<Long> {
@@ -24,6 +24,10 @@ public class Person extends AbstractPersistable<Long> {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
+    /**
+     * Default constructor
+     */
+    @SuppressWarnings("unused")
     public Person() {
     }
 

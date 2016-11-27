@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Stream;
 
 /**
- * Created by afa on 15.08.16.
+ * Initializer for test data.
  */
 @Component
 public class DataInitializer implements CommandLineRunner {
