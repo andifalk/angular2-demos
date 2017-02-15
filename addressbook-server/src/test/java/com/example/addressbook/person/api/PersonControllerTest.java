@@ -43,11 +43,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @WebMvcTest(controllers = PersonController.class)
 @WithMockUser
-@OAuth2ContextConfiguration(ResourceOwnerPasswordResourceDetails.class)
+//@OAuth2ContextConfiguration(ResourceOwnerPasswordResourceDetails.class)
 public class PersonControllerTest implements RestTemplateHolder {
 
-    @Rule
-    public OAuth2ContextSetup context = OAuth2ContextSetup.withEnvironment(this, MyClientDetailsResource.instance());
+    /*@Rule
+    public OAuth2ContextSetup context = OAuth2ContextSetup.withEnvironment(this, MyClientDetailsResource.instance());*/
 
     private RestOperations restTemplate;
 

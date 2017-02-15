@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * Person entity.
@@ -15,9 +16,11 @@ import javax.validation.constraints.NotNull;
 public class Person extends AbstractPersistable<Long> {
 
     @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9- ]{1,30}$")
     private String firstName;
 
     @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9- ]{1,30}$")
     private String lastName;
 
     @NotNull
